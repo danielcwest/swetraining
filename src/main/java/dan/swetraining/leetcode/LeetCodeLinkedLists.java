@@ -136,4 +136,128 @@ public class LeetCodeLinkedLists {
 		}
 		return length;
 	}
+	
+	public void deleteNode(ListNode node) {        
+		node.val = node.next.val;
+		node.next = node.next.next;
+    }
+	
+	
+	public ListNode removeNthFromEnd(ListNode head, int n) {
+        
+		int i = 1;
+		ListNode current = head;
+		ListNode toDelete = head;
+		ListNode previous = null;
+		while(current.next != null) {	
+			if(i >= n) {
+				previous = toDelete;
+				toDelete = toDelete.next;
+			}
+			current = current.next;
+			i++;
+		}
+		
+		if(toDelete == head) {
+			head = head.next;
+		}else {
+			previous.next = previous.next.next;
+		}
+		
+		
+		return head;
+    }
+	
+	public ListNode reverseList(ListNode head) {
+        
+		ListNode current = head;
+		ListNode previous = null;
+		
+		while(current.next != null) {
+			ListNode temp = current.next;
+			current.next = previous;
+			previous = current;
+			current = temp;
+		}
+		
+		current.next = previous;
+		
+		return current;
+    }
+	
+	public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        
+		ListNode current1 = list1;
+		ListNode current2 = list2;
+		ListNode current1Prev = null;
+		
+		while(current1.next != null) {			
+			if(current1.val < current2.val) {
+				current1Prev = current1;
+				current1 = current1.next;
+			}else {
+				ListNode temp = current2.next;
+				current2.next = current1;
+				//current1 = current2;
+				list1 = current2;
+				current2 = temp;
+				//merged = current1;
+			}
+		}
+		
+		while(current2.next != null) {
+			if(current1.val < current2.val) {
+				System.out.println();
+			}else {
+				System.out.println();
+				ListNode temp = current2.next;
+				current2.next = current1;
+				//current1 = current2;
+				current2 = temp;
+				current1Prev.next = current1;
+			}
+		}
+		 
+		
+		return current1;
+    }
+	
+	public ListNode mergeTwoLists2(ListNode list1, ListNode list2) {
+        
+		ListNode current1 = list1;		
+		ListNode current2 = list2;
+		ListNode merged = null;
+		
+		while(current1 != null && current2 != null) {
+			if(current1.val < current2.val) { //Insert current2 in front
+				merged = addNode(merged, current1.val);
+				current1 = current1.next;
+			}else {//
+				merged = addNode(merged, current2.val);
+				current2 = current2.next;
+			}
+		}
+		
+		while(current1 != null) {
+			merged = addNode(merged, current1.val);
+			current1 = current1.next;
+		}
+		
+		while(current2 != null) {
+			merged = addNode(merged, current2.val);
+			current2 = current2.next;
+		}
+				
+		return merged;
+    }
+	
+	public ListNode addNode(ListNode head, int value) {
+		
+		if(head == null) {
+			head = new ListNode(value);
+		}else {
+			head.next = addNode(head.next, value);
+		}
+		return head;
+	}
 }
