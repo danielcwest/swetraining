@@ -185,6 +185,22 @@ public class LeetCodeLinkedLists {
 		return current;
     }
 	
+	public ListNode reverseList2(ListNode head) {
+        
+		ListNode previous = null;
+		
+		while(head.next != null) {
+			ListNode temp = head.next;
+			head.next = previous;
+			previous = head;
+			head = temp;
+		}
+		
+		head.next = previous;
+		
+		return head;
+    }
+	
 	public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         
 		ListNode current1 = list1;

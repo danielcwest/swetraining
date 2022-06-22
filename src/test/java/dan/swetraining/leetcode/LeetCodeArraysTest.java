@@ -2,6 +2,10 @@ package dan.swetraining.leetcode;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class LeetCodeArraysTest {
 
 	LeetCodeArrays lc = new LeetCodeArrays();
@@ -40,5 +44,50 @@ public class LeetCodeArraysTest {
 		int[] result = lc.intersect(new int[] {1,2,2,1}, new int[] {2,2});
 		
 		int[] result2 = lc.intersect(new int[] {4,9,5}, new int[] {9,4,9,8,4});
+	}
+	
+	@Test
+	public void testminimalHeaviestSet() {
+		List<Integer> list = Arrays.asList(5,3, 1);
+		
+		List<Integer> result = lc.minimalHeaviestSetA(list);
+		
+		System.out.println();
+	}
+	
+	@Test
+	public void testCountGroups() {
+		List<String> list = Arrays.asList("1100","1110", "0110", "0001");
+		
+		int result = lc.countGroups(list);
+		
+		System.out.println();
+	}
+	
+	@Test
+	public void testPlusOne() {
+		int[] digits = new int[] {9,8,7,6,5,4,3,2,1,0};
+		
+		int[] result = lc.plusOne(digits);
+		
+		System.out.println();
+	}
+	
+	@Test
+	public void testMoveZeros() {
+		int[] nums = new int[] {0,1,0,3,12};
+		
+		lc.moveZeroes(nums);
+		
+		System.out.println();
+	}
+	
+	@Test
+	public void testTwoSum() {
+		int[] nums = new int[] {3,3};
+		
+		int[] result = lc.twoSum(nums, 6);
+		
+		System.out.println();
 	}
 }

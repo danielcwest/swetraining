@@ -1,6 +1,7 @@
 package dan.swetraining.leetcode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,5 +125,157 @@ public class LeetCodeArrays {
     	}
     	
     	return result;
+    }
+    
+    
+    public static List<Integer> minimalHeaviestSetA(List<Integer> arr) {
+    // Write your code here
+    	List<Integer> result = new ArrayList<Integer>();
+    	
+    	Collections.sort(arr);
+
+    	for(int i = arr.size() - 1; i > 0; i--) {
+    		for(int j = i - 1; j >= 0; j--) {
+        		List<Integer> b = arr.subList(0, j);
+        		List<Integer> a = arr.subList(j, i + 1);
+
+        		if(a.stream().reduce(0, Integer::sum) > b.stream().reduce(0, Integer::sum)) {
+        			result = a;
+        			break;
+        		}
+    		}
+    		if(result.size() > 0) {
+    			break;
+    		}
+    	}
+    	
+    	return result;
+    }
+    
+    public static List<Integer> minimalHeaviestSet2(List<Integer> arr) {
+    // Write your code here
+    	List<Integer> result = new ArrayList<Integer>();
+    	
+
+    	
+    	return result;
+    }
+    
+    public static int countGroups(List<String> related) {
+        // Write your code here
+    	List<List<Integer>> groups = new ArrayList<List<Integer>>();
+    	int count = 0;
+    	int[][] matrix = new int[related.get(0).length()][related.size()];
+    	
+    	for(int i = 0; i < related.size(); i++) {
+    		String r = related.get(i);
+    		for(int j = 0; j < r.length(); j++) {
+    			String val = String.valueOf(r.charAt(j));
+    			matrix[i][j] = Integer.valueOf(val);
+    		}
+    	}
+    	
+    	for(int i = 0; i < matrix[0].length; i++) {
+    		for(int j = 0; j < matrix.length; j++) {
+    			boolean isG = isGroup(matrix, i, j);
+    			if(isG) {
+    				count++;
+    			}
+    		}
+    	}
+
+    	return count;
+     }
+    
+    //recursively check above and below and switch value to zero
+    public static boolean isGroup(int[][] matrix, int i, int j) {
+    	if(i < 0 || j < 0 || i >= matrix[0].length || j >= matrix.length || matrix[i][j] == 0) {
+    		return false;
+    	}else{
+    		matrix[i][j] = 0;
+    		isGroup(matrix, i + 1, j);
+    		isGroup(matrix, i - 1, j);
+    		isGroup(matrix, i, j + 1);
+    		isGroup(matrix, i, j - 1);
+    		
+    		return true;
+    	}
+    }
+
+    
+    public int[] plusOne(int[] digits) {
+        
+    	int[] result;
+    	
+    	boolean increaseArray = true;
+    	
+    	for(int i = 0; i < digits.length; i++) {
+    		if(digits[i] != 9) {
+    			increaseArray = false;
+    		}
+    	}
+    	
+    	if(increaseArray) {
+    		result = new int[digits.length + 1];   		
+    	}else {
+    		result = new int[digits.length];
+    	}    
+    	
+		for(int i = 0; i < digits.length; i++) {
+			result[result.length - 1 - i] = digits[digits.length - 1 - i];
+		}
+
+		boolean remainder = true; //start with remainder flag because we are adding 1
+		
+		for(int i = result.length - 1; i >= 0; i--) {
+			
+			if(result[i] == 9 && remainder) {
+				result[i] = 0;
+			}else if(remainder) {
+				result[i] = result[i] + 1;
+				remainder = false;
+			}
+		}
+    	return result;
+    }
+    
+    public void moveZeroes(int[] nums) {   	
+    	int endIndx = nums.length - 1; 
+    	int startIndx = 0;
+    	for(int i = 0; i < nums.length; i++) {  		
+    		if(nums[startIndx] == 0) {//Rotate
+    			reverse(nums, startIndx, endIndx + 1);
+    			reverse(nums, startIndx, endIndx);
+    			endIndx--;
+    		}else {
+    			startIndx++;
+    		}
+    	}
+    }
+    
+    public int[] twoSum(int[] nums, int target) {
+    	int[] result = new int[2];
+    	
+    	Map<Integer, Integer> map = new HashMap<Integer,Integer> ();
+    	
+    	for(int i = 0; i < nums.length; i++) {
+    		map.put(nums[i], i);
+    	}
+    	
+    	for(int i = 0; i < nums.length; i++) {
+    		int x = nums[i];
+    		
+    		if(map.containsKey(target - x)) {
+    			int yIndx = map.get(target - x);
+    			
+    			if(yIndx == i) continue;
+    			
+    			result[0] = i;
+    			result[1] = yIndx;
+    			break;
+    		}
+    	}
+    	
+        return result;
     }
 }
